@@ -45,6 +45,9 @@ class PatientController {
         .map(patient -> {
             patient.setName(newPatient.getName());
             patient.setSymptom(newPatient.getSymptom());
+            patient.setDepartment(newPatient.getDepartment());
+            patient.setSection(newPatient.getSection());
+            patient.setPost(newPatient.getPost());
             return repository.save(patient);
         })
         .orElseGet(() -> {

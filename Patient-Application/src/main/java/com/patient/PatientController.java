@@ -1,6 +1,6 @@
 package com.patient;
 
-import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +19,13 @@ class PatientController {
         this.repository = repository;
     }
 
-    // GET all patients
+    // [REMOVED] It is not recommended to have findAll() method for big systems, therefore removed for scalability and accessability (data storage and fetching time requirements)
+    /* 
     @GetMapping("/patients")
     List<Patient> all() {
         return repository.findAll();
     }
+    */
 
     // POST new patient
     @PostMapping("/patients")
@@ -33,18 +35,18 @@ class PatientController {
 
     // GET single patient by id
     @GetMapping("/patients/{id}")
-    Patient getPatientById(@PathVariable Long id) {
+    Patient getPatientById(@PathVariable UUID id) {
         return repository.findById(id)
             .orElseThrow(() -> new PatientNotFoundException(id));
     }
 
     // PUT patient
     @PutMapping("/patients/{id}")
-    Patient replacePatient(@RequestBody Patient newPatient, @PathVariable Long id) {
+    Patient replacePatient(@RequestBody Patient newPatient, @PathVariable UUID id) {
         return repository.findById(id)
         .map(patient -> {
             patient.setName(newPatient.getName());
-            patient.setSymptom(newPatient.getSymptom());
+            patient.setSymptom(newPatient.getSymptoms());
             patient.setDepartment(newPatient.getDepartment());
             patient.setSection(newPatient.getSection());
             patient.setPost(newPatient.getPost());
@@ -58,7 +60,7 @@ class PatientController {
 
     // DELETE patient
     @DeleteMapping("/patients/{id}")
-    void deletePatient(@PathVariable Long id) {
+    void deletePatient(@PathVariable UUID id) {
         repository.deleteById(id);
     }
 }

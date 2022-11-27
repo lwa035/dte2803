@@ -1,42 +1,39 @@
 package com.patient;
 
 import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
 class Patient {
-
-    @Id @GeneratedValue
-    private Long id;
+	private UUID id;
 
     private String name;
-    private String symptom;
+    private Set<String> symptoms;
     private int department;
     private int section;
     private int post;
 
     Patient() {}
 
-    Patient(String name, String symptom) {
+    Patient(UUID id, String name, Set<String> symptoms) {
+        this.id = id;
         this.name = name;
-        this.symptom = symptom;
+        this.symptoms = symptoms;
         this.department = 0;
         this.section = 0;
         this.post = 0;
     }
 
-    Patient(String name, String symptom, int department, int section, int post) {
+    Patient(UUID id, String name, Set<String> symptoms, int department, int section, int post) {
+        this.id = id;
         this.name = name;
-        this.symptom = symptom;
+        this.symptoms = symptoms;
         this.department = department;
         this.section = section;
         this.post = post;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 
@@ -44,8 +41,8 @@ class Patient {
         return this.name;
     }
 
-    public String getSymptom() {
-        return this.symptom;
+    public Set<String> getSymptoms() {
+        return this.symptoms;
     }
 
     public int getDepartment() {
@@ -60,7 +57,7 @@ class Patient {
         return this.post;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -68,8 +65,8 @@ class Patient {
         this.name = name;
     }
 
-    public void setSymptom(String symptom) {
-        this.symptom = symptom;
+    public void setSymptom(Set<String> symptoms) {
+        this.symptoms = symptoms;
     }
 
     public void setDepartment(int department) {
@@ -97,14 +94,14 @@ class Patient {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.name, this.symptom, this.department, this.section, this.post);
+        return Objects.hash(this.id, this.name, this.symptoms, this.department, this.section, this.post);
     }
 
     @Override
     public String toString() {
         return "Patient{" + "id=" + this.id + 
         ", name='" + this.name + '\'' + 
-        ", symptom='" + this.symptom + '\'' + 
+        ", symptom='" + String.join(", ", symptoms) + '\'' + 
         ", department='" + this.department + '\'' +
         ", section='" + this.section + '\'' +
         ", post='" + this.post + '\'' + '}';

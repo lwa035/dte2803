@@ -1,5 +1,6 @@
 package com.patient;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.UUID;
+import org.springframework.data.repository.CrudRepository;
 
-interface PatientRepository extends JpaRepository<Patient, Long> {}
+interface PatientRepository extends CrudRepository<Patient, UUID> {}
